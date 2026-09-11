@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Terceros
+    
+    ##TERCEROS
     'rest_framework',
-
+    'drf_spectacular',
+    ##CREADO POR NOSOTROS
     'infraestructura',
 ]
 
@@ -130,9 +131,9 @@ REST_FRAMEWORK = {
     # puede consultarse sin credenciales, pero dar de alta o borrar un nodo
     # exige sesión iniciada. Sin esta clave DRF usa AllowAny y cualquiera
     # podría hacer DELETE sobre un servidor.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
+    #'DEFAULT_PERMISSION_CLASSES': [
+    #    'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    #],
 
     # SessionAuthentication reutiliza la sesión del admin de Django, así que
     # basta con estar logueado ahí (o en /api-auth/login/) para escribir
