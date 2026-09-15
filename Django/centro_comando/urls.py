@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,10 +24,14 @@ urlpatterns = [
     # API REST (JSON). Va antes que el include de la raíz para que el
     # prefijo 'api/' no lo capture el enrutado de las vistas HTML.
     path('api/', include('infraestructura.api_urls')),
+    
     # Login/logout de la API navegable de DRF: permite autenticarse desde
     # el navegador y probar POST/PUT/DELETE, que con IsAuthenticatedOrReadOnly
     # están cerrados a usuarios anónimos.
     path('api-auth/', include('rest_framework.urls')),
-
     path("",include('infraestructura.urls')),
+    
+    # Schema y Swagger UI:
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]

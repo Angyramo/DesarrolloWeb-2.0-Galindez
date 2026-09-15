@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    
     ##TERCEROS
     'rest_framework',
     'drf_spectacular',
@@ -138,6 +139,7 @@ REST_FRAMEWORK = {
     # SessionAuthentication reutiliza la sesión del admin de Django, así que
     # basta con estar logueado ahí (o en /api-auth/login/) para escribir
     # desde la API navegable.
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
     ],
@@ -153,6 +155,9 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
+    #Swagger añadido Angie
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
 }
 
 # Email
