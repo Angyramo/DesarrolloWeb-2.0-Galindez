@@ -1,9 +1,9 @@
 from django.urls import include, path
 from .views import (
     listaServidores, detalleServidor, crear_servidor, editar_servidor, eliminar_servidor,
-    crear_incidencia, resolver_incidencia,
+    crear_incidencia, resolver_incidencia, MantenimientoListView, MantenimientoDetailView,
+        MantenimientoCreateView, MantenimientoUpdateView, MantenimientoDeleteView
 )
-
 
 urlpatterns = [
 
@@ -20,4 +20,12 @@ urlpatterns = [
     # sola a qué servidor pertenece para redirigir de vuelta a su detalle.
     path('incidencia/<int:pk>/resolver/', resolver_incidencia, name='resolver_incidencia'),
     path("api-auth/", include("rest_framework.urls"))
+]
+
+urlpatterns += [
+    path('mantenimientos/', MantenimientoListView.as_view(), name='lista_mantenimientos'),
+    path('mantenimientos/<int:pk>/', MantenimientoDetailView.as_view(), name='detalle_mantenimiento'),
+    path('mantenimientos/nuevo/', MantenimientoCreateView.as_view(), name='crear_mantenimiento'),
+    path('mantenimientos/<int:pk>/editar/', MantenimientoUpdateView.as_view(), name='editar_mantenimiento'),
+    path('mantenimientos/<int:pk>/eliminar/', MantenimientoDeleteView.as_view(), name='eliminar_mantenimiento'),
 ]

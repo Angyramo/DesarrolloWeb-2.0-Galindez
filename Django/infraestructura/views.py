@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
-from .forms import NodoServidorForm, IncidenciaServidorForm
-from .models import NodoServidor, IncidenciaServidor
+from django.urls import reverse_lazy
+from .forms import NodoServidorForm, IncidenciaServidorForm, MantenimientoForm
+from .models import NodoServidor, IncidenciaServidor, MantenimientoNodo 
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 def eliminar_servidor(request, pk):
     nodo = get_object_or_404(NodoServidor, pk=pk)
@@ -96,3 +98,30 @@ def resolver_incidencia(request, pk):
         incidencia.save()
     return redirect('detalle_servidor', pk=incidencia.servidor.pk)
 
+
+class MantenimientoListView(ListView):
+    model = MantenimientoNodo
+    template_name = 'infraestructura/mantenimiento_list.html'
+    context_object_name = 'mantenimientos'
+
+class MantenimientoDetailView(DetailView):
+    model = MantenimientoNodo
+    template_name = 'infraestructura/mantenimiento_detail.html'
+    context_object_name = 'mantenimiento'
+
+class MantenimientoCreateView(CreateView):
+    model = MantenimientoNodo
+    form_class = MantenimientoForm
+    template_name = 'infraestructura/mantenimiento_form.html'
+    success_url = reverse_lazy('lista_mantenimientos')
+
+class MantenimientoUpdateView(UpdateView):
+    model = MantenimientoNodo
+    form_class = MantenimientoForm
+    template_name = 'infraestructura/mantenimiento_form.html'
+    success_url = reverse_lazy('lista_mantenimientos')
+
+class MantenimientoDeleteView(DeleteView):
+    model = MantenimientoNodo
+    template_name = 'infraestructura/mantenimiento_confirm_delete.html'
+    success_url = reverse_lazy('lista_mantenimientos')
