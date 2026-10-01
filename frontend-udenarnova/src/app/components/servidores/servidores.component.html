@@ -1,0 +1,66 @@
+<div style="padding: 20px; max-width: 800px; margin: auto; font-family: sans-serif;">
+  <h2>Gestión de Servidores - UdenarNova (Angular)</h2>
+
+  <!-- Formulario -->
+  <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3>{{ editando ? 'Editar Servidor (ID: ' + idEdicion + ')' : 'Nuevo Servidor' }}</h3>
+      <button type="button" (click)="limpiarFormulario()" *ngIf="editando" style="background: #6c757d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+        + Crear Nuevo
+      </button>
+    </div>
+
+    <form (ngSubmit)="guardarServidor()">
+      <div style="margin-bottom: 12px;">
+        <label style="display:block; margin-bottom: 4px;">Nombre Host:</label>
+        <input type="text" [(ngModel)]="servidorForm.nombre_host" name="nombre_host" required style="width: 100%; padding: 8px;">
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="display:block; margin-bottom: 4px;">Dirección IP:</label>
+        <input type="text" [(ngModel)]="servidorForm.direccion_ip" name="direccion_ip" required style="width: 100%; padding: 8px;">
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="display:block; margin-bottom: 4px;">Tipo Servidor:</label>
+        <select [(ngModel)]="servidorForm.tipo_servidor" name="tipo_servidor" style="width: 100%; padding: 8px;">
+          <option value="web">Servidor Web</option>
+          <option value="bd">Base de Datos</option>
+          <option value="app">Aplicación</option>
+        </select>
+      </div>
+      <button type="submit" style="background: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+        {{ editando ? 'Actualizar Servidor' : 'Guardar Servidor' }}
+      </button>
+      <button type="button" (click)="limpiarFormulario()" style="margin-left: 10px; padding: 8px 16px;">
+        Cancelar / Limpiar
+      </button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #212529; color: white;">
+        <th>ID</th>
+        <th>Host</th>
+        <th>IP</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of servidores">
+        <td>{{ item.id }}</td>
+        <td>{{ item.nombre_host }}</td>
+        <td>{{ item.direccion_ip }}</td>
+        <td>{{ item.tipo_servidor }}</td>
+        <td>
+          <button (click)="seleccionarParaEditar(item)">Editar</button>
+          <button (click)="eliminar(item.id)" style="color: red; margin-left: 5px;">Eliminar</button>
+        </td>
+      </tr>
+      <tr *ngIf="servidores.length === 0">
+        <td colspan="5" style="text-align: center;">No hay registros cargados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
